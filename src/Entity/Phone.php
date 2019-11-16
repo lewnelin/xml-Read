@@ -5,6 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Phone
+ * @ORM\Entity(repositoryClass="App\Repository\PhoneRepository")
  * @ORM\Table("phones")
  */
 class Phone
@@ -25,7 +26,7 @@ class Phone
 
     /**
      * @var Person
-     * @ORM\OneToMany(targetEntity="Person", inversedBy="phones")
+     * @ORM\OneToMany(targetEntity="Person", mappedBy="phones")
      */
     private $person;
 
