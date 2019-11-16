@@ -36,12 +36,10 @@ class Person
 
     /**
      * Person constructor.
-     * @param int $id
      * @param string $name
      */
-    public function __construct($id, $name)
+    public function __construct($name)
     {
-        $this->id = $id;
         $this->name = $name;
         $this->phones = new ArrayCollection();
     }
@@ -49,7 +47,7 @@ class Person
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
