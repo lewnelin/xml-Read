@@ -1,4 +1,5 @@
 <?php
+namespace App\Controller;
 
 use App\Entity\Person;
 use App\Repository\PersonRepository;
