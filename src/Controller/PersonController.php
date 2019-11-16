@@ -14,8 +14,9 @@ class PersonController extends AbstractController
 {
     /**
      * @Route("/people")
+     * @return JsonResponse
      */
-    public function listAction()
+    public function listAction(): JsonResponse
     {
         /** @var PersonRepository $personRepository */
         $personRepository = $this->getDoctrine()->getRepository(Person::class);
