@@ -26,17 +26,21 @@ class Phone
 
     /**
      * @var Person
-     * @ORM\OneToMany(targetEntity="Person", mappedBy="phones")
+     * @ORM\ManyToOne(targetEntity="Person", inversedBy="phones")
      */
     private $person;
 
     /**
      * Phone constructor.
+     * @param int $id
      * @param string $number
+     * @param Person|null $person
      */
-    public function __construct($number)
+    public function __construct(int $id, string $number, Person $person = null)
     {
+        $this->id = $id;
         $this->number = $number;
+        $this->person = $person;
     }
 
     /**
