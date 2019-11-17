@@ -78,5 +78,6 @@ class Phone
     public function setPerson($person): void
     {
         $this->person = $person;
+        $person->addPhone($this);
     }
 }

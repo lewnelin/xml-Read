@@ -19,6 +19,7 @@ class UploadFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): FormInterface
     {
         $builder
+            ->setAction('/upload')
             ->add('xml', FileType::class, [
                 'label' => 'File (XML file)',
                 'allow_file_upload' => 'xml',
