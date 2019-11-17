@@ -10,3 +10,6 @@ Then execute the following commands:
  
 To start the application:
  - symfony server:start
+
+To run phpunit tests:
+ - php bin/phpunit
