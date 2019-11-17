@@ -23,7 +23,10 @@ class UploadFormType extends AbstractType
             ->add('xml', FileType::class, [
                 'label' => 'File (XML file)',
                 'allow_file_upload' => 'xml',
-                'attr' => ['class' => 'uploadFile']
+                'attr' => [
+                    'class' => 'file-upload',
+                    'draggable' => 'true'
+                ]
             ])
             ->add('save', SubmitType::class);
 
