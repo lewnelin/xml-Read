@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Entity\Person;
 use App\Repository\PersonRepository;
 use Doctrine\Common\Collections\Collection;
 
@@ -33,7 +32,6 @@ class PersonService
     public function savePeople(Collection $people)
     {
         foreach ($people as $person) {
-            var_dump($person->getPhones()->first()); exit;
             $this->personRepository->persist($person);
         }
 

@@ -3,15 +3,9 @@
 namespace App\Service;
 
 use App\Entity\Person;
-use App\Serializer\PrefixPersonConverter;
+use App\Entity\Phone;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 /**
  * Class FileUploadService
@@ -25,12 +19,19 @@ class FileUploadService
     private $personService;
 
     /**
+     * @var SerializerService
+     */
+    private $serializerService;
+
+    /**
      * FileUploadService constructor.
      * @param PersonService $personService
+     * @param SerializerService $serializerService
      */
-    public function __construct(PersonService $personService)
+    public function __construct(PersonService $personService, SerializerService $serializerService)
     {
         $this->personService = $personService;
+        $this->serializerService = $serializerService;
     }
 
     /**
@@ -41,20 +42,9 @@ class FileUploadService
         $this->xmlValidate($xmlFile);
 
         $xml = new \SimpleXMLElement(file_get_contents($xmlFile->getRealPath()));
-        $nameConverter = new PrefixPersonConverter();
-        $serializer = new Serializer(
-            [new ObjectNormalizer(null, $nameConverter), new ArrayDenormalizer()],
-            [new XmlEncoder(), new JsonEncoder()]
-        );
+        $this->serializerService->initSerializer();
 
-        $people = new ArrayCollection();
-        /** @var \SimpleXMLElement $personXml */
-        foreach ($xml as $personXml) {
-            $person = $serializer->deserialize($personXml->asXML(), Person::class, 'xml');
-            $people->add($person);
-        }
-
-        $this->personService->savePeople($people);
+        $this->buildPeople($xml);
     }
 
     /**
@@ -65,5 +55,29 @@ class FileUploadService
         if ($xmlFile->guessExtension() !== 'xml') {
             throw new \DomainException('Invalid file upload');
         }
+    }
+
+    /**
+     * @param \SimpleXMLElement $xml
+     */
+    private function buildPeople(\SimpleXMLElement $xml): void
+    {
+        $people = new ArrayCollection();
+        /** @var \SimpleXMLElement $personXml */
+        foreach ($xml as $personXml) {
+            $person = $this->serializerService->deserialize(
+                $personXml,
+                Person::class
+            );
+
+            foreach ($personXml->phones->phone as $phone) {
+                $phone = new Phone($phone);
+                $phone->setPerson($person);
+            }
+
+            $people->add($person);
+        }
+
+        $this->personService->savePeople($people);
     }
 }
