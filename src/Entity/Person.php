@@ -33,7 +33,7 @@ class Person
     /**
      * @var Collection
      * @ORM\OneToMany(targetEntity="Phone", mappedBy="person", cascade={"persist", "merge", "remove"})
-     * @ORM\JoinColumn(name="phones", referencedColumnName="id")
+     * @ORM\JoinColumn(name="phones", referencedColumnName="person")
      */
     private $phones;
 
