@@ -17,6 +17,7 @@ class Item
      * @var int
      * @ORM\Id
      * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      * @Groups({"upload", "show"})
      */
     private $id;
@@ -51,7 +52,7 @@ class Item
 
     /**
      * @var ShipOrder
-     * @ORM\ManyToOne(targetEntity="ShipOrder", inversedBy="itens")
+     * @ORM\ManyToOne(targetEntity="ShipOrder", inversedBy="items")
      * @Groups({"upload"})
      */
     private $shiporder;

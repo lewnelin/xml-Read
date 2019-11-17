@@ -24,7 +24,7 @@ class PersonController extends AbstractController
         /** @var PersonRepository $personRepository */
         $personRepository = $this->getDoctrine()->getRepository(Person::class);
 
-        $serializerService->initSerializer(Person::class);
+        $serializerService->initSerializer();
         $json = $serializerService->serialize($personRepository->findAll(), ['groups' => ['show']]);
 
         $response = new Response($json);

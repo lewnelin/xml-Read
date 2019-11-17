@@ -26,48 +26,48 @@ class ShipOrder
     /**
      * @var Person
      * @ORM\OneToOne(targetEntity="Person", cascade={"persist"})
-     * @Groups({"show"})
+     * @Groups({"upload", "show"})
      */
     private $person;
 
     /**
      * @var ShipTo
      * @ORM\OneToOne(targetEntity="ShipTo", cascade={"persist", "remove"})
-     * @Groups({"show"})
+     * @Groups({"upload", "show"})
      */
     private $shipto;
 
     /**
      * @var Collection
      * @ORM\OneToMany(targetEntity="Item", mappedBy="shiporder", cascade={"persist", "merge", "remove"})
-     * @ORM\JoinColumn(name="itens", referencedColumnName="shiporder")
+     * @ORM\JoinColumn(name="items", referencedColumnName="shiporder")
      * @Groups({"show"})
      */
-    private $itens;
+    private $items;
 
     /**
      * ShipOrder constructor.
      * @param int $id
      * @param Person $person
      * @param ShipTo $shipto
-     * @param Collection $itens
+     * @param Collection $items
      */
     public function __construct(
         int $id = null,
         Person $person = null,
         ShipTo $shipto = null,
-        Collection $itens = null
+        Collection $items = null
     ) {
         $this->id = $id;
         $this->person = $person;
         $this->shipto = $shipto;
-        $this->itens = $itens ?? new ArrayCollection();
+        $this->items = $items ?? new ArrayCollection();
     }
 
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -115,16 +115,24 @@ class ShipOrder
     /**
      * @return Collection
      */
-    public function getItens(): Collection
+    public function getItems(): Collection
     {
-        return $this->itens;
+        return $this->items;
     }
 
     /**
-     * @param Collection $itens
+     * @param Collection $items
      */
-    public function setItens(Collection $itens)
+    public function setItems(Collection $items)
     {
-        $this->itens = $itens;
+        $this->items = $items;
+    }
+
+    /**
+     * @param Item $item
+     */
+    public function addItem(Item $item)
+    {
+        $this->items->add($item);
     }
 }

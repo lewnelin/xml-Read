@@ -7,7 +7,7 @@ use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
  * Class PrefixPersonConverter
  * @package App\Serializer
  */
-class PrefixPersonConverter implements NameConverterInterface
+class PrefixOrderConverter implements NameConverterInterface
 {
     /**
      * @param string $propertyName
@@ -15,11 +15,11 @@ class PrefixPersonConverter implements NameConverterInterface
      */
     public function normalize($propertyName)
     {
-        if ($propertyName === 'phone') {
+        if (in_array($propertyName, ['shipto', 'items'])) {
             return $propertyName;
         }
 
-        return 'person' . $propertyName;
+        return 'order' . $propertyName;
     }
 
     /**
@@ -28,6 +28,6 @@ class PrefixPersonConverter implements NameConverterInterface
      */
     public function denormalize($propertyName)
     {
-        return 'person' === substr($propertyName, 0, 4) ? substr($propertyName, 4) : $propertyName;
+        return 'order' === substr($propertyName, 0, 4) ? substr($propertyName, 4) : $propertyName;
     }
 }

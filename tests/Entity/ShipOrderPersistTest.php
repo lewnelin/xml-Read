@@ -29,11 +29,11 @@ class ShipOrderPersistTest extends TestCase
     public function testCreateShipOrder(ShipOrderRepository $shipOrderRepository)
     {
         $shipOrder = new ShipOrder(1);
-        $itens = new ArrayCollection([
+        $items = new ArrayCollection([
             new Item(1, 'Item 1', 'Note 1', 100, 21.2, $shipOrder),
             new Item(2, 'Item 2', 'Note 2', 100, 21.3, $shipOrder)
         ]);
-        $shipOrder->setItens($itens);
+        $shipOrder->setItems($items);
 
         $shipTo = new ShipTo(1, 'Place 1', 'Address 1', 'City 1', 'Country 1');
         $shipOrder->setShipto($shipTo);
