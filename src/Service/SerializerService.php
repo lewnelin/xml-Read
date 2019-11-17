@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Person;
 use App\Serializer\PrefixPersonConverter;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -22,9 +23,14 @@ class SerializerService
      */
     private $serializer;
 
-    public function initSerializer()
+    public function initSerializer(string $className)
     {
-        $nameConverter = new PrefixPersonConverter();
+        $nameConverter = null;
+
+        if ($className === Person::class) {
+            $nameConverter = new PrefixPersonConverter();
+        }
+
         $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
 
         $this->serializer = new Serializer(
@@ -35,11 +41,12 @@ class SerializerService
 
     /**
      * @param array $data
+     * @param array $options
      * @return string
      */
-    public function serialize(array $data): string
+    public function serialize(array $data, array $options = []): string
     {
-        return $this->serializer->serialize($data, 'json');
+        return $this->serializer->serialize($data, 'json', $options);
     }
 
     /**
@@ -48,7 +55,7 @@ class SerializerService
      * @param array $groups
      * @return object
      */
-    public function deserialize(\SimpleXMLElement $xml, string $class, array $groups = ['groups' => ['group1']])
+    public function deserialize(\SimpleXMLElement $xml, string $class, array $groups = ['groups' => ['upload']])
     {
         return $this->serializer->deserialize(
             $xml->asXML(),

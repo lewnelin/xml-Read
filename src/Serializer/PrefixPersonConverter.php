@@ -15,6 +15,10 @@ class PrefixPersonConverter implements NameConverterInterface
      */
     public function normalize($propertyName)
     {
+        if ($propertyName === 'phone') {
+            return $propertyName;
+        }
+
         return 'person' . $propertyName;
     }
 

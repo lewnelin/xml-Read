@@ -13,7 +13,7 @@ class PersonTest extends TestCase
 
     public function testCreate()
     {
-        $person = new Person('Arthur');
+        $person = new Person(1,'Arthur');
 
         $this->assertEquals('Arthur', $person->getName());
     }
