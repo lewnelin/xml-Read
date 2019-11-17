@@ -41,6 +41,10 @@
                 background-repeat: no-repeat;
                 background-image: url("/InvilliaLogo.jpg");
             }
+
+            .buttons .form-group{
+                display: inline;
+            }
         </style>
     {% endblock %}
     {% block stylesheets %}{% endblock %}
@@ -52,13 +56,18 @@
         <div class="row">
             <div class="Absolute-Center is-Responsive">
                 <div id="logo-container"></div>
+                {{ form_start(form) }}
                 <div class="col-sm-12 col-md-10 col-md-offset-1">
-                    {{ form_start(form) }}
                     <div class="file-upload-wrapper">
-                    {{ form_widget(form) }}
+                        {{ form_row(form.xml) }}
+                        {{ form_row(form.upload) }}
                     </div>
-                    {{ form_end(form) }}
                 </div>
+                <div class="col-sm-12 col-md-10 col-md-offset-1 buttons">
+                    {{ form_row(form.people) }}
+                    {{ form_row(form.shiporders) }}
+                </div>
+                {{ form_end(form) }}
             </div>
         </div>
     </div>
@@ -68,7 +77,15 @@
     <script>
         $("#upload_form_xml").on('change', function () {
             $(".custom-file-label").html($(this).val());
-        })
+        });
+
+        $(".btn-people").on('click', function () {
+            location.href = "/people";
+        });
+
+        $(".btn-shiporders").on('click', function () {
+            location.href = "/shiporder";
+        });
     </script>
 {% endblock %}
 </body>

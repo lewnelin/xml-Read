@@ -134,5 +134,6 @@ class ShipOrder
     public function addItem(Item $item)
     {
         $this->items->add($item);
+        $item->setShiporder($this);
     }
 }
