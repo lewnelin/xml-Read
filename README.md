@@ -8,3 +8,5 @@ Then execute the following commands:
  - doctrine:database:create
  - doctrine:schema:update --force 
  
+To start the application:
+ - symfony server:start
