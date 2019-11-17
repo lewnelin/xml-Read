@@ -22,7 +22,7 @@ class Phone
      * @var string
      * @ORM\Column(type="string")
      */
-    private $number;
+    private $phone;
 
     /**
      * @var Person
@@ -32,15 +32,12 @@ class Phone
 
     /**
      * Phone constructor.
-     * @param int $id
-     * @param string $number
-     * @param Person|null $person
+     * @param string $phone
+     * @internal param int $id
      */
-    public function __construct(int $id, string $number, Person $person = null)
+    public function __construct(string $phone)
     {
-        $this->id = $id;
-        $this->number = $number;
-        $this->person = $person;
+        $this->phone = $phone;
     }
 
     /**
@@ -54,17 +51,17 @@ class Phone
     /**
      * @return string
      */
-    public function getNumber(): string
+    public function getphone(): string
     {
-        return $this->number;
+        return $this->phone;
     }
 
     /**
-     * @param string $number
+     * @param string $phone
      */
-    public function setNumber($number): void
+    public function setphone($phone): void
     {
-        $this->number = $number;
+        $this->phone = $phone;
     }
 
     /**

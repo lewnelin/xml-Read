@@ -5,6 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -18,18 +19,20 @@ class Person
      * @var int
      * @ORM\Id
      * @ORM\Column(type="integer")
+     * @Groups({"group1"})
      */
     private $id;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @Groups({"group1"})
      */
     private $name;
 
     /**
      * @var Collection
-     * @ORM\OneToMany(targetEntity="Phone", mappedBy="person")
+     * @ORM\OneToMany(targetEntity="Phone", mappedBy="person", cascade={"persist", "merge", "remove"})
      * @ORM\JoinColumn(name="phones", referencedColumnName="id")
      */
     private $phones;

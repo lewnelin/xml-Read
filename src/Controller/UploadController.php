@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UploadController extends AbstractController
 {
     /**
-     * @Route("/upload", methods={"GET"})
+     * @Route("/", methods={"GET"})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
