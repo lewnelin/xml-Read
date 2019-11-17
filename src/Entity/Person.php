@@ -5,6 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Class Person
@@ -16,7 +17,6 @@ class Person
     /**
      * @var int
      * @ORM\Id
-     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -29,19 +29,23 @@ class Person
 
     /**
      * @var Collection
-     * @ORM\ManyToOne(targetEntity="Phone", inversedBy="person")
+     * @ORM\OneToMany(targetEntity="Phone", mappedBy="person")
      * @ORM\JoinColumn(name="phones", referencedColumnName="id")
      */
     private $phones;
 
     /**
      * Person constructor.
+     * @param int $id
      * @param string $name
+     * @param Collection|null $phones
+     * @internal param int $id
      */
-    public function __construct($name)
+    public function __construct(int $id, string $name, Collection $phones = null)
     {
+        $this->id = $id;
         $this->name = $name;
-        $this->phones = new ArrayCollection();
+        $this->phones = $phones ?? new ArrayCollection();
     }
 
     /**
@@ -50,6 +54,14 @@ class Person
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id)
+    {
+        $this->id = $id;
     }
 
     /**
@@ -82,5 +94,13 @@ class Person
     public function addPhone(Phone $phone): void
     {
         $this->phones->add($phone);
+    }
+
+    /**
+     * @param array $phones
+     */
+    public function setPhones(array $phones)
+    {
+        $this->phones = new ArrayCollection($phones);
     }
 }

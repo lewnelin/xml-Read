@@ -2,7 +2,9 @@
 namespace App\Controller;
 
 use App\Form\UploadFormType;
+use App\Service\FileUploadService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,16 +31,24 @@ class UploadController extends AbstractController
     /**
      * @Route("/upload", methods={"POST"})
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param FileUploadService $fileUploadService
+     * @return JsonResponse
      */
-    public function uploadAction(Request $request)
-    {
-        $files = $request->files->get('upload_form');
+    public function uploadAction(
+        Request $request,
+        FileUploadService $fileUploadService
+    ): JsonResponse {
+        try {
+            $files = $request->files->get('upload_form');
+            /** @var UploadedFile $xmlFile */
+            $xmlFile = $files['xml'] ?? false;
 
-        if (isset($files['xml'])) {
-            return new JsonResponse('Success');
+            $fileUploadService->uploadXmlFile($xmlFile);
+
+            $response = 'Success';
+        } catch (\Throwable $exception) {
+            $response = 'An Error Occurred: ' . $exception->getMessage();
         }
-
-        return new JsonResponse('Error');
+        return new JsonResponse($response);
     }
 }
