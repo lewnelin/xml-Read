@@ -28,7 +28,7 @@ class UploadFormType extends AbstractType
                     'draggable' => 'true'
                 ]
             ])
-            ->add('save', SubmitType::class);
+            ->add('upload', SubmitType::class);
 
         return $builder->getForm();
     }

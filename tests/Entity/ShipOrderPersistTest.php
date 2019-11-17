@@ -23,10 +23,8 @@ use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
  */
 class ShipOrderPersistTest extends TestCase
 {
-    /**
-     * @param ShipOrderRepository $shipOrderRepository
-     */
-    public function testCreateShipOrder(ShipOrderRepository $shipOrderRepository)
+
+    public function testCreateShipOrder()
     {
         $shipOrder = new ShipOrder(1);
         $items = new ArrayCollection([
@@ -41,9 +39,6 @@ class ShipOrderPersistTest extends TestCase
         $person = new Person(6, 'Name 6', new ArrayCollection([new Phone('7775135')]));
         $shipOrder->setPerson($person);
 
-        $shipOrderRepository->persist($shipOrder);
-        $shipOrderRepository->flush();
-
-
+        $this->assertTrue($shipOrder instanceof ShipOrder);
     }
 }
