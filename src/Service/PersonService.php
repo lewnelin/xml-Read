@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Person;
 use App\Repository\PersonRepository;
 use Doctrine\Common\Collections\Collection;
 
@@ -36,5 +37,14 @@ class PersonService
         }
 
         $this->personRepository->flush();
+    }
+
+    /**
+     * @param int $id
+     * @return Person|null
+     */
+    public function getPerson(int $id): ?Person
+    {
+        return $this->personRepository->find($id);
     }
 }
