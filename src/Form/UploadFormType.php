@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,7 +29,17 @@ class UploadFormType extends AbstractType
                     'draggable' => 'true'
                 ]
             ])
-            ->add('upload', SubmitType::class);
+            ->add('upload', SubmitType::class)
+            ->add('people', ButtonType::class, [
+                'attr' => [
+                    'class' => 'btn-people'
+                ]
+            ])
+            ->add('shiporders', ButtonType::class, [
+                'attr' => [
+                    'class' => 'btn-shiporders'
+                ]
+            ]);
 
         return $builder->getForm();
     }
