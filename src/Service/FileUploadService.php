@@ -42,7 +42,7 @@ class FileUploadService
         $this->xmlValidate($xmlFile);
 
         $xml = new \SimpleXMLElement(file_get_contents($xmlFile->getRealPath()));
-        $this->serializerService->initSerializer();
+        $this->serializerService->initSerializer(Person::class);
 
         $this->buildPeople($xml);
     }

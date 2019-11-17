@@ -2,30 +2,35 @@
 namespace App\Controller;
 
 use App\Entity\Person;
-use App\Repository\PersonRepository;
+use App\Entity\Phone;
+use App\Entity\ShipTo;
+use App\Entity\Item;
+use App\Entity\ShipOrder;
+use App\Repository\ShipOrderRepository;
 use App\Service\SerializerService;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class PersonController
+ * Class ShipOrderController
  * @package App\Controller
  */
-class PersonController extends AbstractController
+class ShipOrderController extends AbstractController
 {
     /**
-     * @Route("/people")
+     * @Route("/shiporder")
      * @param SerializerService $serializerService
      * @return Response
      */
     public function listAction(SerializerService $serializerService): Response
     {
-        /** @var PersonRepository $personRepository */
-        $personRepository = $this->getDoctrine()->getRepository(Person::class);
+        /** @var ShipOrderRepository $shipOrderRepository */
+        $shipOrderRepository = $this->getDoctrine()->getRepository(ShipOrder::class);
 
-        $serializerService->initSerializer(Person::class);
-        $json = $serializerService->serialize($personRepository->findAll(), ['groups' => ['show']]);
+        $serializerService->initSerializer(ShipOrder::class);
+        $json = $serializerService->serialize($shipOrderRepository->findAll(), ['groups' => 'show']);
 
         $response = new Response($json);
         $response->headers->set('Content-Type', 'application/json');

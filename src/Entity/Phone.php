@@ -2,10 +2,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Class Phone
- * @ORM\Entity(repositoryClass="App\Repository\PhoneRepository")
+ * @ORM\Entity()
  * @ORM\Table("phones")
  */
 class Phone
@@ -21,6 +22,7 @@ class Phone
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @Groups({"show"})
      */
     private $phone;
 

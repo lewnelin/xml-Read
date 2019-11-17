@@ -4,9 +4,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinColumn;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Class Person
@@ -19,14 +17,14 @@ class Person
      * @var int
      * @ORM\Id
      * @ORM\Column(type="integer")
-     * @Groups({"group1"})
+     * @Groups({"upload", "show"})
      */
     private $id;
 
     /**
      * @var string
      * @ORM\Column(type="string")
-     * @Groups({"group1"})
+     * @Groups({"upload", "show"})
      */
     private $name;
 
@@ -34,6 +32,7 @@ class Person
      * @var Collection
      * @ORM\OneToMany(targetEntity="Phone", mappedBy="person", cascade={"persist", "merge", "remove"})
      * @ORM\JoinColumn(name="phones", referencedColumnName="person")
+     * @Groups({"show"})
      */
     private $phones;
 
