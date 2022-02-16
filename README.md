@@ -1,5 +1,4 @@
-# Invillia PHP Challenge
-Challenge by Invillia
+# XML PHP Challenge
 
 To run this project you need to have composer and mysql installed and running.
   
